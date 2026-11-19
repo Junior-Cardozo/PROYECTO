@@ -1,0 +1,13 @@
+# Variables privadas
+.env
+
+# Archivos generados por .NET
+**/bin/
+**/obj/
+
+# Configuracion de Visual Studio
+.vs/
+.vscode/
+
+# Archivos temporales
+*.log
