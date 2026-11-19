@@ -21,6 +21,13 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+// Aplicar migraciones pendientes al iniciar la API
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<MonitorDbContext>();
+
+    db.Database.Migrate();
+}
 
 // Publicar OpenAPI también en producción (Docker).
 app.MapOpenApi();

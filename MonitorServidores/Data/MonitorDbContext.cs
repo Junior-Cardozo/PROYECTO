@@ -15,6 +15,8 @@ public class MonitorDbContext : DbContext
 
     public DbSet<ReglaAlerta> ReglasAlerta { get; set; }
 
+    public DbSet<Incidente> Incidentes { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -28,5 +30,17 @@ public class MonitorDbContext : DbContext
         modelBuilder.Entity<ReglaAlerta>()
             .Property(r => r.Umbral)
             .HasPrecision(5, 2);
+
+        modelBuilder.Entity<Incidente>(entity =>
+{
+    entity.Property(i => i.Gravedad)
+        .HasDefaultValue("media");
+
+    entity.Property(i => i.Estado)
+        .HasDefaultValue("abierto");
+
+    entity.Property(i => i.FechaRegistro)
+        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+});    
     }
 }
