@@ -1,6 +1,7 @@
+
 services:
   api:
-    image: yasminndiaz/monitorservidores-api:integrante1
+    image: diego1hoyos/monitorservidores-api:1.0
     container_name: monitor-api
 
     ports:
@@ -20,7 +21,7 @@ services:
     restart: unless-stopped
 
   postgres:
-    image: postgres:17
+    image: postgres:18
     container_name: monitor-postgres
 
     environment:
@@ -32,7 +33,7 @@ services:
       - "127.0.0.1:5433:5432"
 
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
 
     networks:
       - monitor_red
@@ -47,6 +48,8 @@ services:
 
 volumes:
   postgres_data:
+    external: true
+    name: postgres18_data
 
 networks:
   monitor_red:

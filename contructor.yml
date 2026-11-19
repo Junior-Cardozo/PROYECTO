@@ -1,5 +1,4 @@
 services:
-  # SERVICIO 1: API .NET 10
   api:
     build:
       context: ./MonitorServidores
@@ -24,9 +23,8 @@ services:
 
     restart: unless-stopped
 
-  # SERVICIO 2: POSTGRESQL
   postgres:
-    image: postgres:17
+    image: postgres:18
     container_name: monitor-postgres
 
     environment:
@@ -38,7 +36,7 @@ services:
       - "127.0.0.1:5433:5432"
 
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
 
     networks:
       - monitor_red

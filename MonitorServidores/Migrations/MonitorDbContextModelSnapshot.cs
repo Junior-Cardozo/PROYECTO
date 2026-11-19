@@ -22,6 +22,44 @@ namespace MonitorServidores.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("MonitorServidores.Models.ReglaAlerta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Activa")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Metrica")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("ServidorId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Umbral")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("numeric(5,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServidorId");
+
+                    b.ToTable("reglas_alerta");
+                });
+
             modelBuilder.Entity("MonitorServidores.Models.Servidor", b =>
                 {
                     b.Property<int>("Id")
@@ -53,6 +91,17 @@ namespace MonitorServidores.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("servidores");
+                });
+
+            modelBuilder.Entity("MonitorServidores.Models.ReglaAlerta", b =>
+                {
+                    b.HasOne("MonitorServidores.Models.Servidor", "Servidor")
+                        .WithMany()
+                        .HasForeignKey("ServidorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Servidor");
                 });
 #pragma warning restore 612, 618
         }
